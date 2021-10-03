@@ -11,6 +11,17 @@ const Header = () => {
             </Link>
         </div>
 
+        <div className="column rp" style={{marginRight: '20px'}}>
+            <div className="ui vertical  button">
+            <Link to = '/login'>
+            <div className="visible content">
+                login
+            </div>
+            </Link>
+            </div>
+        </div>
+
+
         <div className="column rp">
             <div className="ui vertical animated button" tabIndex="0">
             <Link to = '/cart'>
@@ -20,7 +31,6 @@ const Header = () => {
             <div className="visible content"><i className="shop icon"></i></div>
             </Link>
             </div>
-            
         </div>
 
         </div>

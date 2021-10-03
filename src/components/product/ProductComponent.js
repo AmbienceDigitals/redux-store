@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {useSelector} from 'react-redux';
 import {Link} from 'react-router-dom';
 import {products} from '../../features/productSlice';
+
 
 
 const ProductComponent = () =>{
@@ -9,12 +10,12 @@ const ProductComponent = () =>{
     const renderedProduct = storeProducts.map((product) => {
         const {id, title, image, price, category} = product
         return (
-            <div className='four wide column' key={id}>
+            <div className="four wide column" key={id}>
                 <Link to={`/product/${id}`}>
             <div className='ui link cards'>
             <div className='card'>
                 <div className='image'>
-                    <img src={image} alt={title}></img>
+                    <img src={image} alt={title} style={{height: '48vh'}}></img>
                 </div>
                 <div className='content'>
                     <div className='header'>{title} </div>

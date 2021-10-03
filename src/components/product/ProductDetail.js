@@ -41,7 +41,7 @@ const ProductDetail = () =>{
 
     return (
                 // if product is empty
-                <div className="ui grid container">
+            <div className="ui grid container">
                 {Object.keys(productDetail).length === 0 ? (
                 <div className='ui grid container list'>
                     ...Loading

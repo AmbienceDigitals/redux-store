@@ -6,7 +6,7 @@ const CartListing = () =>{
 
     useEffect(() => {
         setRefresh(!refresh)
-    }, [refresh])
+    }, [])
     return (
         <div className='ui grid container'>
             <CartComponent></CartComponent>
