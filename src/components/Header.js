@@ -3,7 +3,6 @@ import {Link, useHistory} from 'react-router-dom';
 import { useAuthState } from "react-firebase-hooks/auth";
 import {auth, db, logout } from "../firebase";
 import '../App.css';
-import Login from './Authentication/Login';
 
 const Header = () => {
     const history = useHistory();
@@ -29,12 +28,12 @@ const Header = () => {
         setName(data.name);
         }
     } catch (err) {
-        console.error(err);
-        alert("An error occurred while fetching user data");
+        alert(`${err} occurred while fetching user data`);
         }
     };
     const loggedOut = () => {
         logout();
+        localStorage.clear();
         history.push('/login')
         setName('')
     }
@@ -44,9 +43,8 @@ const Header = () => {
         if(name) {
             setName(name)
         }
-    }, []);
+    }, [name]);
     
-    if (loggedOut)  history.replace('/login')
 
     return (
         <div className='ui fixed menu'>
@@ -73,7 +71,7 @@ const Header = () => {
             <div className="ui vertical  button">
             <Link to = '/login'>
             <div className="visible content">
-                {!name ? ("Login") : (name)}
+                {!name  ? ("Login") : (name)}
             </div>
             </Link>
             </div>
@@ -86,15 +84,13 @@ const Header = () => {
             <div className="hidden content">
                 Cart
             </div>
-            <div className="visible content"><i className="shop icon"></i></div>
-            </Link>) : 
-            (<Link to = '/login'>
+            <div className="visible content"><i className="shop icon">{}</i></div>
+            </Link>) : (<Link to = '/cart'>
             <div className="hidden content">
                 Cart
             </div>
             <div className="visible content"><i className="shop icon"></i></div>
-            </Link>
-            )}
+            </Link>)}
             </div>
         </div>
 

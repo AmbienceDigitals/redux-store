@@ -6,12 +6,10 @@ import {selectedProduct, removeSelectedProduct, product} from '../../features/pr
 import {addToCart} from '../../features/cartSlice';
 import {useHistory} from 'react-router-dom';
 
-
 const ProductDetail = () =>{
     const productDetail = useSelector(product);
     const {image, title, price, category, description} = productDetail;
     const [refresh, setRefresh] = useState(true);
-    const [name, setName] = useState(localStorage.getItem('username'))
 
     const history = useHistory();
     const {productId} = useParams();
@@ -27,15 +25,8 @@ const ProductDetail = () =>{
     }
 
     const addProductToCart = () => {
-        if(!name) {
-            history.push('/login')
-        }
-
-        else {
-            dispatch(addToCart(productDetail))
-            setRefresh(!refresh)
-        }
-        setName(!name)
+        dispatch(addToCart(productDetail))
+        setRefresh(!refresh)
     }
 
     useEffect(() => {
@@ -72,7 +63,8 @@ const ProductDetail = () =>{
                         <div 
                         className="ui vertical animated button" 
                         tabIndex="0" 
-                        onClick={() => {addProductToCart()}}>
+                        onClick={() => {
+                            addProductToCart()}}>
                         <div className="hidden content">
                             <i className="shop icon"></i>
                         </div>

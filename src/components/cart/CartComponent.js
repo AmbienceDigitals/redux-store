@@ -34,6 +34,8 @@ const CartComponent = () => {
             </div>
         )
     })
+
+
     return (
         <>{storeCart.length === 0 ? (
             <div className='list'>

@@ -16,7 +16,9 @@ const Login = () => {
         if (loading) {
             <h1>...Loading</h1>
         }
-        if (user) history.push('/cart')
+        if (user) {
+            history.push('/cart')
+        }
         }, [user, loading]);  
     return (
         <div className="ui center aligned middle aligned grid" style={{height: "100vh"}}>
