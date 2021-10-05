@@ -1,5 +1,10 @@
 .list {
-  margin-top: 10px!important;
+  margin-top: 5rem;
+  margin-left: 3rem;
+}
+
+.space {
+  margin-bottom: 25px;
 }
 
 a {

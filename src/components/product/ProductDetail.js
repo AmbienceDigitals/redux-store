@@ -4,12 +4,16 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import {selectedProduct, removeSelectedProduct, product} from '../../features/productSlice';
 import {addToCart} from '../../features/cartSlice';
+import {useHistory} from 'react-router-dom';
 
 
 const ProductDetail = () =>{
     const productDetail = useSelector(product);
     const {image, title, price, category, description} = productDetail;
     const [refresh, setRefresh] = useState(true);
+    const [name, setName] = useState(localStorage.getItem('username'))
+
+    const history = useHistory();
     const {productId} = useParams();
     const dispatch = useDispatch();
 
@@ -23,13 +27,16 @@ const ProductDetail = () =>{
     }
 
     const addProductToCart = () => {
-        dispatch(addToCart(productDetail))
-        setRefresh(!refresh)
-    }
+        if(!name) {
+            history.push('/login')
+        }
 
-    // const routeChange = () => {
-    //     history.push(`/`);
-    // };
+        else {
+            dispatch(addToCart(productDetail))
+            setRefresh(!refresh)
+        }
+        setName(!name)
+    }
 
     useEffect(() => {
         if (productId && productId !== '')
@@ -62,7 +69,10 @@ const ProductDetail = () =>{
                         </h2>
                         <h3 className="ui brown block header">{category}</h3>
                         <p>{description}</p>
-                        <div className="ui vertical animated button" tabIndex="0" onClick={() => {addProductToCart()}}>
+                        <div 
+                        className="ui vertical animated button" 
+                        tabIndex="0" 
+                        onClick={() => {addProductToCart()}}>
                         <div className="hidden content">
                             <i className="shop icon"></i>
                         </div>

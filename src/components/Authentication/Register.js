@@ -4,7 +4,7 @@ import {Link, useHistory} from 'react-router-dom';
 import {auth,
     registerWithEmailAndPassword,
     signInWithGoogle,
-} from "../firebase";
+} from "../../firebase";
 
 const Register = () => {
     const [email, setEmail] = useState("");
@@ -14,21 +14,26 @@ const Register = () => {
     const [user, loading, error] = useAuthState(auth);
     const history = useHistory();
 
-    const register = () => {
-        if (!name){ 
-            alert("Please enter name")
-        } 
-        else if (confirmPassword !== password) {
-            alert("ensure that your password match")
-        }
-        else {
-            registerWithEmailAndPassword(name, email, password);
+    const register = async (e) => {
+        e.preventDefault();
+        try {
+            if (!name){ 
+                alert("Please enter name")
+            } 
+            else if (confirmPassword !== password) {
+                alert("ensure that your password match")
+            }
+            else {
+                registerWithEmailAndPassword(name, email, password);
+            }
+        } catch (err) {
+            console.log(error)
         }
     };
 
     useEffect(() => {
         if (loading) return;
-        if (user) history.replace("/cart");
+        if (user) history.push("/cart");
     }, [user, loading]);
     
     return (
@@ -36,7 +41,9 @@ const Register = () => {
             <div className="column" style={{maxWidth: "450px"}}>
                 <h2 className="ui teal center aligned header">
                     Register your account</h2>
-                <form className="ui large form">
+                <form
+                className="ui large form"
+                onSubmit={register}>
                     <div className="ui stacked segment">
                         <div className="field">
                             <label>Name</label>
@@ -88,13 +95,16 @@ const Register = () => {
                         
                         <button 
                         className="ui teal large fluid button"
-                        onClick={() => register()}>Register</button>
-                        <button 
+                        >Register</button>
+                    </div>
+                </form>
+
+                <div>
+                <button 
                         className="ui large fluid button"
                         style={{marginTop: '20px'}}
                         onClick={() =>signInWithGoogle()}>Register With Google</button>
-                    </div>
-                </form>
+                </div>
                 
                 <div  className="ui message">
                     Already have an account? <Link to={'/login'}>login</Link>

@@ -8,7 +8,6 @@ import '../../App.css'
 
 const ProductListing = () => {
     const [mobile, setMobile] = useState(window.innerWidth <= 760);
-
     const dispatch = useDispatch()
 
     const fetchProducts = async () => {
@@ -22,15 +21,14 @@ const ProductListing = () => {
     useEffect(() => {
         fetchProducts();
         window.addEventListener("resize", () => {
-                const isMobile = window.innerWidth <= 760;
-                if (isMobile !== mobile) setMobile(isMobile);
+            const isMobile = window.innerWidth <= 760;
+            if (isMobile !== mobile) setMobile(isMobile);
             }, false)
     }, [mobile]);
 
     return (
-        <div className={`${mobile ? "list lex" : "ui grid container mobile"}`}>
-            <ProductComponent
-            style={{width: '100vw'}}></ProductComponent>
+        <div className={`${mobile ? "list" : "ui grid container mobile"}`}>
+            <ProductComponent></ProductComponent>
         </div>
     )
 }

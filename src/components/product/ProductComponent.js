@@ -1,16 +1,16 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import {useSelector} from 'react-redux';
 import {Link} from 'react-router-dom';
 import {products} from '../../features/productSlice';
 
-
+import '../../App.css'
 
 const ProductComponent = () =>{
     const storeProducts = useSelector(products);
     const renderedProduct = storeProducts.map((product) => {
         const {id, title, image, price, category} = product
         return (
-            <div className="four wide column" key={id}>
+            <div className="four wide column space" key={id}>
                 <Link to={`/product/${id}`}>
             <div className='ui link cards'>
             <div className='card'>
