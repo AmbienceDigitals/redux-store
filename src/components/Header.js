@@ -2,11 +2,14 @@ import React, {useState, useEffect} from 'react';
 import {Link, useHistory} from 'react-router-dom';
 import { useAuthState } from "react-firebase-hooks/auth";
 import {auth, db, logout } from "../firebase";
+import { useSelector } from 'react-redux';
+import {cartLength} from '../features/cartSlice';
 import '../App.css';
 
 const Header = () => {
+    const cartList = useSelector(cartLength);
     const history = useHistory();
-    const [name, setName] = useState('');
+    const [name, setName] = useState(localStorage.getItem('username'));
     const [user] = useAuthState(auth);
     
     const fetchUserName = async () => {
@@ -17,7 +20,7 @@ const Header = () => {
             .get();
         const data = await query.docs[0].data();
         if(localStorage.getItem('username') && localStorage.getItem('username') === name) {
-            console.log(name)
+            setName(data.name)
             }
         else {
         // clearing localStorage
@@ -28,7 +31,7 @@ const Header = () => {
         setName(data.name);
         }
     } catch (err) {
-        alert(`${err} occurred while fetching user data`);
+        return;
         }
     };
     const loggedOut = () => {
@@ -40,8 +43,8 @@ const Header = () => {
 
     useEffect(() => {
         fetchUserName();
-        if(name) {
-            setName(name)
+        if(!name) {
+            setName(!name)
         }
     }, [name]);
     
@@ -50,11 +53,12 @@ const Header = () => {
         <div className='ui fixed menu'>
         <div className='ui container center'>
             <Link to ='/'>
-            <h2> Ambience Store</h2>
+            <h2 
+            style={{marginRight: '20px'}}> Ambience Store</h2>
             </Link>
         </div>
             {user ? (
-                <div className="column rp" style={{marginRight: '20px'}}>
+                <div className="column rp" style={{marginRight: '10px'}}>
                 <div 
                 className="ui vertical animated button"
                 tabIndex="0"
@@ -67,7 +71,7 @@ const Header = () => {
                 </div>
             ) :    ('')}
 
-        <div className="column rp" style={{marginRight: '20px'}}>
+        <div className="column rp" style={{marginRight: '10px'}}>
             <div className="ui vertical  button">
             <Link to = '/login'>
             <div className="visible content">
@@ -84,7 +88,7 @@ const Header = () => {
             <div className="hidden content">
                 Cart
             </div>
-            <div className="visible content"><i className="shop icon">{}</i></div>
+            <div className="visible content"><i className="shop icon">{cartList}</i></div>
             </Link>) : (<Link to = '/cart'>
             <div className="hidden content">
                 Cart

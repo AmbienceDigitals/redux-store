@@ -11,7 +11,7 @@ const CartComponent = () => {
     const cartList = storeCart.map((product) => {
         const {uniqueId, title, image, price, category} = product
         return (
-            <div className='four wide column' key={uniqueId}>
+            <div className='four wide column space' key={uniqueId}>
                 <div className='ui link cards'>
                 <div className='card'>
                     <div className='image'>

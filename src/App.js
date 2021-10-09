@@ -7,6 +7,7 @@ import Login from './components/Authentication/Login';
 import ProductDetail from './components/product/ProductDetail';
 import ProductListing from './components/product/ProductListing';
 import Register from './components/Authentication/Register';
+import Stripe from './components/Payment/Stripe';
 
 function App() {
   return (
@@ -26,6 +27,8 @@ function App() {
           path='/product/:productId' exact component={ProductDetail}></Route>
           <Route
           path='/cart' exact component={CartListing}></Route>
+          <Route
+          path='/stripe' exact component={Stripe}></Route>
         </Switch>
       </Router>
     </div>

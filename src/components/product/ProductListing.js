@@ -4,7 +4,6 @@ import ProductComponent from './ProductComponent';
 import { useDispatch } from 'react-redux';
 import { addProduct } from '../../features/productSlice';
 
-import '../../App.css'
 
 const ProductListing = () => {
     const [mobile, setMobile] = useState(window.innerWidth <= 760);
@@ -27,7 +26,7 @@ const ProductListing = () => {
     }, [mobile]);
 
     return (
-        <div className={`${mobile ? "list" : "ui grid container mobile"}`}>
+        <div className={mobile ? "list ui center aligned middle aligned container flex" : "ui grid container"}>
             <ProductComponent></ProductComponent>
         </div>
     )

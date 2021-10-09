@@ -3,36 +3,56 @@ import {useHistory} from 'react-router-dom';
 import CartComponent from './CartComponent';
 import { useAuthState } from "react-firebase-hooks/auth";
 import {auth } from "../../firebase";
-import { useSelector } from 'react-redux';
-import {cart} from '../../features/cartSlice';
+import { useSelector} from 'react-redux';
+import { totalPrice} from '../../features/cartSlice';
+
 
 const CartListing = () =>{
-    const storeCart = useSelector(cart);
-    const [name, setName] = useState(localStorage.getItem('username'))
+    const total = useSelector(totalPrice);
+    const [name, setName] = useState(localStorage.getItem('username'));
     const [refresh, setRefresh] = useState(false);
-    const [totalPrice] = useState(0);
+    const [mobile, setMobile] = useState(window.innerWidth <= 760);
     const history = useHistory();
     const [user] = useAuthState(auth);
 
-    const total = storeCart.reduce((accumulator, current) => accumulator + current.price, totalPrice);
+
+    const checkOut = () => {
+        history.push('/stripe')
+    }
 
     useEffect(() => {
         setName(name)
         setRefresh(!refresh)
-    }, [])
+        window.addEventListener("resize", () => {
+            const isMobile = window.innerWidth <= 760;
+            if (isMobile !== mobile) setMobile(isMobile);
+            }, false)
+        return (() => {
+
+        })
+    }, [mobile])
 
     if(!user) history.push('/login')
 
     return (
-        <div className='ui grid container'>
-            <div className="ui grid container">
+        <div className="ui center aligned middle aligned grid">
+            <div className={mobile ? "list ui center aligned middle aligned container flex" : "ui grid container"}>
                 <CartComponent></CartComponent>
             </div>
-            <div className='ui message'>
-                Total Price : #{total}
-                <div>
-                    <button>Check Out</button>
+            <div class="ui card">
+                <div class="content">
+                    <div 
+                    class="header center aligned middle aligned grid"
+                    style={{marginBottom: '20px'}}>
+                        Total Price : ${total.toFixed(2)} 
+                    </div>
+                    <div class="meta">
+                    <button 
+                    class="ui fluid button"
+                    onClick={() => checkOut()}>Check Out</button>
+                    </div>
                 </div>
+                
             </div>
         </div>
     )
