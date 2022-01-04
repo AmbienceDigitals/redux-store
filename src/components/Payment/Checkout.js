@@ -12,6 +12,7 @@ const Checkout = () => {
 
     const history = useHistory();
     const total = useSelector(totalPrice);
+    const clear = useSelector(clearCart);
     // const [isPaymentLoading, setPaymentLoading] = useState(false);
     // const [receiptUrl, setReceiptUrl] = useState('')
     const dispatch = useDispatch()
