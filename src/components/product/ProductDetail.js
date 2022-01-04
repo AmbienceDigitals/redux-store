@@ -11,22 +11,20 @@ const ProductDetail = () =>{
     const productLength = useSelector(products)
     const {image, title, price, category, description} = productDetail;
     const [refresh, setRefresh] = useState(true);
-
-    // const history = useHistory();
-    let {productId} = useParams();
+    // const [{productId}, setProductId] = useState(useParams());
+    const {productId} = useParams();
     const dispatch = useDispatch();
-    // const Length = products.reduce((acc, product) => acc + 1, 0);
 
     const next = () => {
         if (productId < productLength.length) {
-            productId++
+            productId+='1'
             fetchProductDetail()
         }
     }
 
     const previous = () => {
         if (productId > 1) {
-            productId--;
+            // setProductId(productId--);
             fetchProductDetail();
             
         }
@@ -39,7 +37,7 @@ const ProductDetail = () =>{
             console.log("we ran into the following error" + err)
         });
         dispatch(selectedProduct(response.data));
-        console.log(productId)
+        console.log(typeof(productId))
         return response.data
     }
 
@@ -70,9 +68,9 @@ const ProductDetail = () =>{
                 <div className="ui placeholder segment">
                     <div className="ui container segment block clear">
                     <button className="ui left floated button teal" 
-                    onClick={() => {previous()}}><i className='angle double left icon'/> Previous </button>
+                    onClick={() => {previous()}}>{productLength.length}<i className='angle double left icon'/> Previous </button>
                     <button className="ui right floated button teal"
-                    onClick={() => {next()}}>Next <i className='angle double right icon'/></button>
+                    onClick={() => {next()}}>Next <i className='angle double right icon'/>{productId + 1}</button>
                     <div style= {{clear: 'both'}}></div>
                     </div>
                    
