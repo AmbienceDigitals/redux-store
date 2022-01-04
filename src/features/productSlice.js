@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { StatisticLabel } from 'semantic-ui-react';
 import {v1 as uuid} from 'uuid'
 
 const initialState = {
