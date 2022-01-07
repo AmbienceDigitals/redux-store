@@ -1,11 +1,9 @@
-import React, {useState} from 'react';
+import React from 'react';
 import { CardNumberElement, CardExpiryElement, CardElement,
     CardCvcElement, useStripe, useElements,} from "@stripe/react-stripe-js";
 import {useHistory} from 'react-router-dom';
 import {useSelector, useDispatch} from 'react-redux';
 import { totalPrice, clearCart} from '../../features/cartSlice';
-import axios from 'axios';
-import { Link } from 'react-router-dom';
 
 
 const Checkout = () => {
@@ -13,8 +11,6 @@ const Checkout = () => {
     const history = useHistory();
     const total = useSelector(totalPrice);
     const clear = useSelector(clearCart);
-    // const [isPaymentLoading, setPaymentLoading] = useState(false);
-    // const [receiptUrl, setReceiptUrl] = useState('')
     const dispatch = useDispatch()
     const stripe = useStripe();
     const elements = useElements();
@@ -27,24 +23,26 @@ const Checkout = () => {
         if (elements == null) {
             return
           }
-        //   const cardNumberElement = elements.getElement([CardNumberElement, CardExpiryElement, CardCvcElement])
-        //   const cardExpiryElement = elements.getElement(CardExpiryElement)
-        //   const cardCvcElement = elements.getElement(CardCvcElement)
           
           const res = await stripe.createPaymentMethod({
               type: 'card',
               card: elements.getElement(CardNumberElement, CardExpiryElement, CardCvcElement)
           })
 
-          confirmParams: {
-              return_url: history.goBack()
-          }
+        //   confirmParams: {
+        //       return_url: history.goBack()
+        //   }
         if (res.error) {
             // Show error to your customer (for example, payment details incomplete)
             console.log(res.error.message);
           } else {
             console.log(res)
           }
+    }
+
+    const Payout = () => {
+        dispatch(clear);
+        history.go("/")
     }
 
     return (

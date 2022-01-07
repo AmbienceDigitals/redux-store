@@ -13,18 +13,25 @@ const ProductDetail = () =>{
     const [refresh, setRefresh] = useState(true);
     // const [{productId}, setProductId] = useState(useParams());
     const {productId} = useParams();
+    const [nextProduct, setNextProduct] = useState(parseInt(productId));
+    const [updatedProduct, setUpdatedProduct] = useState(nextProduct);
     const dispatch = useDispatch();
 
-    const next = () => {
-        if (productId < productLength.length) {
-            productId+='1'
-            fetchProductDetail()
+
+    const next = async () => {
+        if (nextProduct < productLength.length + 1) {
+            await setNextProduct(nextProduct + 1)
+            await setUpdatedProduct(updatedProduct);
+            console.log(nextProduct)
+            fetchProductDetail();
         }
     }
 
-    const previous = () => {
-        if (productId > 1) {
-            // setProductId(productId--);
+    const previous = async () => {
+        if (nextProduct > 0) {
+            await setNextProduct(nextProduct - 1)
+            await setUpdatedProduct(updatedProduct);
+            console.log(nextProduct)
             fetchProductDetail();
             
         }
@@ -32,28 +39,27 @@ const ProductDetail = () =>{
 
     
     const fetchProductDetail = async () => {
-        const response = await axios.get(`https://fakestoreapi.com/products/${productId}`)
+        const response = await axios.get(`https://fakestoreapi.com/products/${nextProduct}`)
         .catch((err) => {
             console.log("we ran into the following error" + err)
         });
         dispatch(selectedProduct(response.data));
-        console.log(typeof(productId))
         return response.data
     }
 
 
     const addProductToCart = () => {
-        dispatch(addToCart(productDetail))
-        setRefresh(!refresh)
+        dispatch(addToCart(productDetail));
+        setRefresh(!refresh);
     }
 
     useEffect(() => {
-        if (productId && productId !== '')
+        if (nextProduct && nextProduct !== '')
         fetchProductDetail();
         return () => {
             dispatch(removeSelectedProduct());
         }
-    }, [productId, refresh])
+    }, [refresh, nextProduct, productId])
 
     return (
                 // if product is empty
@@ -68,9 +74,9 @@ const ProductDetail = () =>{
                 <div className="ui placeholder segment">
                     <div className="ui container segment block clear">
                     <button className="ui left floated button teal" 
-                    onClick={() => {previous()}}>{productLength.length}<i className='angle double left icon'/> Previous </button>
+                    onClick={() => {previous()}}>{nextProduct - 1}<i className='angle double left icon'/> Previous </button>
                     <button className="ui right floated button teal"
-                    onClick={() => {next()}}>Next <i className='angle double right icon'/>{productId + 1}</button>
+                    onClick={() => {next()}}>Next <i className='angle double right icon'/>{nextProduct + 1}</button>
                     <div style= {{clear: 'both'}}></div>
                     </div>
                    
