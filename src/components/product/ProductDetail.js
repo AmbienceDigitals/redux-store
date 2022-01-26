@@ -4,34 +4,32 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import {selectedProduct, removeSelectedProduct, product, products} from '../../features/productSlice';
 import {addToCart} from '../../features/cartSlice';
-import {useHistory} from 'react-router-dom';
 
 const ProductDetail = () =>{
     const productDetail = useSelector(product);
     const productLength = useSelector(products)
     const {image, title, price, category, description} = productDetail;
     const [refresh, setRefresh] = useState(true);
-    // const [{productId}, setProductId] = useState(useParams());
     const {productId} = useParams();
-    const [nextProduct, setNextProduct] = useState(parseInt(productId));
-    const [updatedProduct, setUpdatedProduct] = useState(nextProduct);
+    // const [nextProduct, setNextProduct] = useState(parseInt(productId));
+    const [updatedProduct, setUpdatedProduct] = useState(+productId);
     const dispatch = useDispatch();
 
 
     const next = async () => {
-        if (nextProduct < productLength.length + 1) {
-            await setNextProduct(nextProduct + 1)
-            await setUpdatedProduct(updatedProduct);
-            console.log(nextProduct)
+        if (updatedProduct < productLength.length + 1) {
+            // await setNextProduct(nextProduct + 1)
+            await setUpdatedProduct(updatedProduct + 1);
+            // console.log(nextProduct)
             fetchProductDetail();
         }
     }
 
     const previous = async () => {
-        if (nextProduct > 0) {
-            await setNextProduct(nextProduct - 1)
-            await setUpdatedProduct(updatedProduct);
-            console.log(nextProduct)
+        if (updatedProduct > 0) {
+            // await setNextProduct(nextProduct - 1)
+            await setUpdatedProduct(updatedProduct - 1);
+            // console.log(nextProduct)
             fetchProductDetail();
             
         }
@@ -39,7 +37,7 @@ const ProductDetail = () =>{
 
     
     const fetchProductDetail = async () => {
-        const response = await axios.get(`https://fakestoreapi.com/products/${nextProduct}`)
+        const response = await axios.get(`https://fakestoreapi.com/products/${updatedProduct}`)
         .catch((err) => {
             console.log("we ran into the following error" + err)
         });
@@ -54,12 +52,12 @@ const ProductDetail = () =>{
     }
 
     useEffect(() => {
-        if (nextProduct && nextProduct !== '')
+        if (updatedProduct && updatedProduct !== '')
         fetchProductDetail();
         return () => {
             dispatch(removeSelectedProduct());
         }
-    }, [refresh, nextProduct, productId])
+    }, [refresh, updatedProduct, productId])
 
     return (
                 // if product is empty
@@ -74,9 +72,9 @@ const ProductDetail = () =>{
                 <div className="ui placeholder segment">
                     <div className="ui container segment block clear">
                     <button className="ui left floated button teal" 
-                    onClick={() => {previous()}}>{nextProduct - 1}<i className='angle double left icon'/> Previous </button>
+                    onClick={() => {previous()}}><i className='angle double left icon'/> Previous </button>
                     <button className="ui right floated button teal"
-                    onClick={() => {next()}}>Next <i className='angle double right icon'/>{nextProduct + 1}</button>
+                    onClick={() => {next()}}>Next <i className='angle double right icon'/></button>
                     <div style= {{clear: 'both'}}></div>
                     </div>
                    

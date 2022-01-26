@@ -28,21 +28,13 @@ const Checkout = () => {
               type: 'card',
               card: elements.getElement(CardNumberElement, CardExpiryElement, CardCvcElement)
           })
-
-        //   confirmParams: {
-        //       return_url: history.goBack()
-        //   }
         if (res.error) {
             // Show error to your customer (for example, payment details incomplete)
             console.log(res.error.message);
           } else {
-            console.log(res)
+                dispatch(clear);
+                history.push("/")
           }
-    }
-
-    const Payout = () => {
-        dispatch(clear);
-        history.go("/")
     }
 
     return (
@@ -95,8 +87,7 @@ const Checkout = () => {
                     style={{marginTop: '20px'}}
                     type='submit'
                     disabled={!stripe || !elements}
-                    className="ui teal large fluid button"
-                    >{`$${total.toFixed(2)}`}</button>
+                    className="ui teal large fluid button">{`$${total.toFixed(2)}`}</button>
 
                 </form>
                 
