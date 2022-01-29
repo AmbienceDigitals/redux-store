@@ -12,41 +12,41 @@ const Header = () => {
     const [name, setName] = useState(localStorage.getItem('username'));
     const [user] = useAuthState(auth);
     
-    const fetchUserName = async () => {
-        try {
-        const query = await db
-            .collection("users")
-            .where("uid", "==", user?.uid)
-            .get();
-        const data = await query.docs[0].data();
-        if(localStorage.getItem('username') && localStorage.getItem('username') === name) {
-            setName(data.name)
-            }
-        else {
-        // clearing localStorage
-        localStorage.clear();
-        // passing name into localStorage if user exists
-        localStorage.setItem('username', name);
-        history.push('/cart');
-        setName(data.name);
-        }
-    } catch (err) {
-        return;
-        }
-    };
+    // const fetchUserName = async () => {
+    //     try {
+    //     const query = await db
+    //         .collection("users")
+    //         .where("uid", "==", user?.uid)
+    //         .get();
+    //     const data = await query.docs[0].data();
+    //     if(localStorage.getItem('username') && localStorage.getItem('username') === name) {
+    //         setName(data.name)
+    //         }
+    //     else {
+    //     // clearing localStorage
+    //     localStorage.clear();
+    //     // passing name into localStorage if user exists
+    //     localStorage.setItem('username', name);
+    //     history.push('/cart');
+    //     setName(data.name);
+    //     }
+    // } catch (err) {
+    //     return;
+    //     }
+    // };
     const loggedOut = () => {
         logout();
-        localStorage.clear();
+        // localStorage.clear();
         history.push('/login')
-        setName('')
+        // setName('')
     }
 
-    useEffect(() => {
-        fetchUserName();
-        if(!name) {
-            setName(!name)
-        }
-    }, [name]);
+    // useEffect(() => {
+    //     fetchUserName();
+    //     if(!name) {
+    //         setName(!name)
+    //     }
+    // }, [name]);
     
 
     return (
@@ -63,7 +63,7 @@ const Header = () => {
                 className="ui vertical animated button"
                 tabIndex="0"
                 onClick={() =>loggedOut()}>
-                <div className="hidden content">{!name  ? <i className="logout icon"/> : (name)}</div>
+                <div className="hidden content"><i className="logout icon"/> </div>
                 <div className="visible content">
                 <Link to={'/login'}>Logout</Link>
                 </div>
