@@ -39,16 +39,16 @@ const CartListing = () =>{
             <div className={mobile ? "list ui center aligned middle aligned container flex" : "ui grid container"}>
                 <CartComponent></CartComponent>
             </div>
-            <div class="ui card">
-                <div class="content">
+            <div className="ui card">
+                <div className="content">
                     <div 
-                    class="header center aligned middle aligned grid"
+                    className="header center aligned middle aligned grid"
                     style={{marginBottom: '20px'}}>
                         Total Price : ${total.toFixed(2)} 
                     </div>
-                    <div class="meta">
+                    <div className="meta">
                     <button 
-                    class="ui fluid button"
+                    className="ui fluid button"
                     onClick={() => checkOut()}>Check Out</button>
                     </div>
                 </div>

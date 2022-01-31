@@ -3,7 +3,7 @@ import {v1 as uuid} from 'uuid'
 
 const initialState = {
     products: [],
-    product: {}
+    product: {},
 }
 
 const productSlice = createSlice({
@@ -22,16 +22,16 @@ const productSlice = createSlice({
                     }
                 })
             }
-        },
+        }, 
 
         selectedProduct: (state, action) => {
-            state.product = Object.assign({}, {...action.payload, uniqueId: uuid()});
+            state.product = Object.assign({}, {...action.payload, uniqueId: uuid()})
         },
 
         removeSelectedProduct: (state, action) => {
             state.product = Object.assign({}, {});
-        }
-    
+        },
+
     }
 });
 

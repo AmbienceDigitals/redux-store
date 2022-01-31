@@ -11,7 +11,7 @@ const Stripe = () => {
 
     return (
         <Elements stripe={stripePromise}>
-            <Checkout></Checkout>
+            <Checkout/>
         </Elements>
     )
 }

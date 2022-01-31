@@ -27,7 +27,7 @@ const ProductListing = () => {
 
     return (
         <div className={mobile ? "list ui center aligned middle aligned container flex" : "ui grid container"}>
-            <ProductComponent></ProductComponent>
+            <ProductComponent/>
         </div>
     )
 }
